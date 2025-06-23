@@ -2,7 +2,7 @@
 // import { DB_NAME } from "./constant";
 import connectDB from "./db/index.js";
 import dotenv from "dotenv"
-
+import { app } from "./app.js";
 
 dotenv.config(
     {
@@ -11,6 +11,19 @@ dotenv.config(
 )
 
 connectDB()
+.then(()=>{
+
+    app.on("error",(error)=>{
+        console.log(error);
+    })
+    app.listen(process.env.PORT||8000,()=>{
+        console.log(`Server is Running at port ::${process.env.PORT}`)
+    })
+})
+.catch((err)=>
+{
+    console.log("MANGO DB Connection failed")
+})
 
 
 
